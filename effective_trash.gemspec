@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.email       = ['info@codeandeffect.com']
   s.authors     = ['Code and Effect']
   s.homepage    = 'https://github.com/code-and-effect/effective_trash'
-  s.summary     = 'Serializes active record objects on destroy. Rails engine with Trash and Admin Trash views to restore deleted items.'
-  s.description = 'Serializes active record objects on destroy. Rails engine with Trash and Admin Trash views to restore deleted items.'
+  s.summary     = 'Trash and Restore any Active Record object.'
+  s.description = 'Trash and Restore any Active Record object.'
   s.licenses    = ['MIT']
 
   s.files = Dir['{app,config,db,lib}/**/*'] + ['MIT-LICENSE', 'README.md']

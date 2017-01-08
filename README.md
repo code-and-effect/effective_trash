@@ -1,6 +1,6 @@
 # Effective Trash
 
-Simple Trash and Restore functionality for any Active Record object.
+Trash and Restore any Active Record object.
 
 ## Getting Started
 

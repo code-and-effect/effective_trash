@@ -32,5 +32,5 @@ EffectiveTrash.setup do |config|
   # }
 
   # Enable the /trash, /admin/trash and /trash/:id/restore routes. Doesn't affect acts_as_trashable itself.
-  config.trash_enabled = true
+  config.routes_enabled = true
 end

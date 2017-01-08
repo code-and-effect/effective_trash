@@ -3,7 +3,7 @@
   .panel-body
     .row
       .col-lg-6
-        %span.label= trash.status
+        %span.label= trash
         &nbsp;
         = trash.created_at.strftime("%Y-%m-%d %H:%M:%S")
         = '(' + time_ago_in_words(trash.created_at) + ' ago)'
@@ -14,7 +14,7 @@
         - if trash.user.present?
           %strong User:
           &nbsp;
-          = (trash.user.to_s.starts_with?('#<User:0x') ? (trash.user.email rescue trash.user) : trash.user)
+          = trash.user.to_s
 
     - trash.details.each do |key, value|
       - next unless value.present?

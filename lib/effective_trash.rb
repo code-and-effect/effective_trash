@@ -9,7 +9,7 @@ module EffectiveTrash
 
   mattr_accessor :authorization_method
   mattr_accessor :layout
-  mattr_accessor :trash_enabled
+  mattr_accessor :routes_enabled
 
   def self.setup
     yield self

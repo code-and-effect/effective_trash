@@ -1,4 +1,4 @@
-odule Effective
+module Effective
   class Trash < ActiveRecord::Base
     self.table_name = EffectiveTrash.trash_table_name.to_s
 

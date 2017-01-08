@@ -16,19 +16,19 @@ module Effective
 
     # This is the User show event
     def show
-      @trash = Effective::Trash.trash.find(params[:id])
+      @trash = Effective::Trash.where(user_id: current_user.id).find(params[:id])
       @page_title = "Trash item - #{@trash.to_s}"
 
       EffectiveTrash.authorized?(self, :show, @trash)
     end
 
     def restore
-      @trash = Effective::Trash.trash.find(params[:id])
+      @trash = Effective::Trash.all.find(params[:id])
       EffectiveTrash.authorized?(self, :update, @trash)
 
       Effective::Trash.transaction do
         begin
-          @trash.restore_trashable!
+          @trash.restore_trash!
           @trash.destroy!
           flash[:success] = "Successfully restored #{@trash}"
         rescue => e

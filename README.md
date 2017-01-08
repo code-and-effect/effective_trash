@@ -1,6 +1,6 @@
 # Effective Trash
 
-Simple Trash restore functionality for Active Record objects.
+Simple Trash and Restore functionality for any Active Record object.
 
 ## Getting Started
 
@@ -34,7 +34,6 @@ rake db:migrate
 
 ## Usage
 
-
 Add to your model:
 
 ```ruby
@@ -51,49 +50,40 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-The `acts_as_trashable` mixin sets up `before_destroy` hook and copies the now-deleted attributes to an `Effective::Trash` object.
+## How it works
 
-Visit `/trash`, or `/admin/trash` to restore them.
+The `acts_as_trashable` mixin sets up `before_destroy` and serializes the resource's attributes to an `Effective::Trash` object.
 
-## Admin Screen
+It also serializes the attributes of any `belongs_to`, `has_one`, and `has_many` with `accepts_nested_attributes` related resources.
 
-To use the Admin screen, please also install the [effective_datatables](https://github.com/code-and-effect/effective_datatables/) gem:
+Restoring only works with the single base object right now.
 
-```ruby
-gem 'effective_datatables'
-```
+## Routes
 
-Then you should be able to visit:
+Visit `/trash`, or `/admin/trash` for an interface to view and restore Trash.
 
 ```ruby
 link_to 'Trash', effective_trash.trash_index_path   # /trash
-link_to 'Trash', effective_trash.admin_trash_index_path   # /admin/trash
+link_to 'Admin Trash', effective_trash.admin_trash_index_path   # /admin/trash
 ```
 
-But you may need to add the permission (using CanCan):
+## Permissions
+
+Add the following permissions (using CanCan):
 
 ```ruby
-can [:index, :show, :restore], Effective::Trash, user_id: user.id
+can :manage, Effective::Trash, user_id: user.id
 
 # Admin
 can :manage, Effective::Trash
 can :admin, :effective_trash
 ```
 
+The user must be permitted to to `:update` an `Effective::Trash` in order to restore the trashed item.
+
 ## License
 
 MIT License.  Copyright [Code and Effect Inc.](http://www.codeandeffect.com/)
-
-## Testing
-
-The test suite for this gem is unfortunately not yet complete.
-
-Run tests by:
-
-```ruby
-rake spec
-```
-
 
 ## Contributing
 

@@ -37,13 +37,13 @@ module EffectiveTrashHelper
     if value.kind_of?(Hash)
       tableize_hash(value, :class => 'table', :th => true)
     elsif value.kind_of?(Array)
-      value.map { |value| effective_trashging_simple_format(value) }.join.html_safe
+      value.map { |value| effective_trash_simple_format(value) }.join.html_safe
     else
       value = value.to_s
 
       open = value.index('<!DOCTYPE html') || value.index('<html')
       close = value.rindex('</html>') if open.present?
-      return effective_trashging_simple_format(value) unless (open.present? && close.present?)
+      return effective_trash_simple_format(value) unless (open.present? && close.present?)
 
       before = value[0...open]
       after = value[(close+7)..-1]
@@ -62,7 +62,7 @@ module EffectiveTrashHelper
     end
   end
 
-  def effective_trashging_simple_format(value)
+  def effective_trash_simple_format(value)
     simple_format(sanitize(value.to_s, :tags => ALLOWED_TAGS, :attributes => ALLOWED_ATTRIBUTES), {}, :sanitize => false)
   end
 

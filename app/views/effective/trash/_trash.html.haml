@@ -1,0 +1,26 @@
+.panel
+  .panel-heading
+  .panel-body
+    .row
+      .col-lg-6
+        %span.label= trash.status
+        &nbsp;
+        = trash.created_at.strftime("%Y-%m-%d %H:%M:%S")
+        = '(' + time_ago_in_words(trash.created_at) + ' ago)'
+        %br
+        %br
+
+      .col-lg-6
+        - if trash.user.present?
+          %strong User:
+          &nbsp;
+          = (trash.user.to_s.starts_with?('#<User:0x') ? (trash.user.email rescue trash.user) : trash.user)
+
+    - trash.details.each do |key, value|
+      - next unless value.present?
+      .row
+        .col-lg-12
+          %p
+            %strong= "#{key.to_s.titleize}:"
+          = format_trash_details_value(trash, key)
+

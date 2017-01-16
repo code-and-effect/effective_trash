@@ -81,6 +81,23 @@ can :admin, :effective_trash
 
 The user must be permitted to to `:update` an `Effective::Trash` in order to restore the trashed item.
 
+## Upgrade database from archived booleans
+
+Use the following generator, to produce a database migration:
+
+```
+rails generate effective_trash:trash_archived_booleans
+```
+
+The migration will trash all `archived?` objects, delete them, and replace the archived boolean on the corresponding database table.
+
+This upgrades from this gem author's previous archived implementation, which was:
+
+- Use an `archived` boolean on each model.
+- Call the model by a scope (or default scope, yuck) somehting like `Post.where(archived: false)`.
+
+Don't do that.
+
 ## License
 
 MIT License.  Copyright [Code and Effect Inc.](http://www.codeandeffect.com/)

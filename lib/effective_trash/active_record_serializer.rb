@@ -3,6 +3,7 @@ module EffectiveTrash
     attr_accessor :resource, :options
 
     def initialize(resource, options = {})
+      options ||= {}
       raise ArgumentError.new('options must be a Hash') unless options.kind_of?(Hash)
 
       @resource = resource
@@ -28,7 +29,7 @@ module EffectiveTrash
         attributes[association.name] = {}
 
         Array(resource.send(association.name)).each_with_index do |child, index|
-          attributes[association.name][index+1] = ActiveRecordLogger.new(child, options).attributes
+          attributes[association.name][index+1] = ActiveRecordSerializer.new(child, options).attributes
         end
       end
 

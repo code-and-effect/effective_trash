@@ -28,8 +28,7 @@ module Effective
 
       Effective::Trash.transaction do
         begin
-          @trash.restore_trash!
-          @trash.destroy!
+          @trash.restore!
           flash[:success] = "Successfully restored #{@trash}"
         rescue => e
           flash[:danger] = "Unable to restore: #{e.message}"

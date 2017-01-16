@@ -17,14 +17,7 @@ module ActsAsTrashable
     has_one :trash, as: :trashed, class_name: Effective::Trash
 
     before_destroy do
-      trash = Effective::Trash.new(
-        trashed: self,
-        user: EffectiveTrash.current_user,
-        trashed_to_s: to_s,
-        trashed_extra: (trashed_extra if respond_to?(:trashed_extra)),
-
-        details: EffectiveTrash::ActiveRecordSerializer.new(self, acts_as_trashable_options).attributes
-      ).save!
+      EffectiveTrash.trash!(self)
     end
 
     # Parse Options

@@ -28,9 +28,10 @@ module Effective
 
     # So this is a Trash item
     # When we delete ourselves, we restore this trash item first
-    def restore_trash!
+    def restore!
       raise 'no attributes to restore from' unless details.kind_of?(Hash) && details[:attributes].present?
       trashed_type.constantize.new(details[:attributes]).save!
+      destroy!
     end
 
   end

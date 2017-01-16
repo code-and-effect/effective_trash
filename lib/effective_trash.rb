@@ -31,4 +31,17 @@ module EffectiveTrash
     @effective_trash_current_user
   end
 
+  # Trash it - Does not delete the original object.
+  # This is run in a before_destroy, or through a script.
+  def self.trash!(obj)
+    trash = Effective::Trash.new(
+      trashed: obj,
+      user: EffectiveTrash.current_user,
+      trashed_to_s: obj.to_s,
+      trashed_extra: (trashed_extra if obj.respond_to?(:trashed_extra)),
+
+      details: EffectiveTrash::ActiveRecordSerializer.new(obj, obj.try(:acts_as_trashable_options)).attributes
+    ).save!
+  end
+
 end

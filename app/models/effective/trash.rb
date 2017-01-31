@@ -19,7 +19,7 @@ module Effective
     default_scope -> { order(updated_at: :desc) }
 
     def to_s
-      [trashed_type, trashed_id].join(' ').presence || 'New Trash item'
+      trashed_to_s.presence || [trashed_type, trashed_id].join(' ').presence || 'New Trash item'
     end
 
     def details

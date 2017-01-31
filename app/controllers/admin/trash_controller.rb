@@ -18,7 +18,7 @@ module Admin
 
     def show
       @trash = Effective::Trash.all.find(params[:id])
-      @page_title = "Trash item - #{@trash.to_s}"
+      @page_title = "Trash item - #{@trash.trashed_to_s}"
 
       EffectiveTrash.authorized?(self, :show, @trash)
       EffectiveTrash.authorized?(self, :admin, :effective_trash)

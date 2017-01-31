@@ -1,4 +1,5 @@
 require 'haml-rails'
+require 'effective_resources'
 require 'effective_trash/engine'
 require 'effective_trash/version'
 
@@ -39,8 +40,7 @@ module EffectiveTrash
       user: EffectiveTrash.current_user,
       trashed_to_s: obj.to_s,
       trashed_extra: (trashed_extra if obj.respond_to?(:trashed_extra)),
-
-      details: EffectiveTrash::ActiveRecordSerializer.new(obj, obj.try(:acts_as_trashable_options)).attributes
+      details: Effective::Resource.new(obj).instance_attributes
     ).save!
   end
 

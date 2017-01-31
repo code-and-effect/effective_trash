@@ -11,14 +11,14 @@ if defined?(EffectiveDatatables)
           table_column :id, visible: false
 
           unless attributes[:user_id] || attributes[:user] || (attributes[:user] == false)
-            table_column :user, label: 'Destroyed by', visible: false
+            table_column :user, label: 'Destroyed by'
           end
 
           table_column :trashed_type, label: 'Type'
           table_column :trashed_id, label: 'Original Id', visible: false
           table_column :trashed_to_s, label: 'Item'
 
-          table_column :details, visible: true, sortable: false do |trash|
+          table_column :details, visible: false, sortable: false do |trash|
             tableize_hash(trash.details, th: true, sub_th: false, width: '100%')
           end
 

@@ -8,7 +8,13 @@ module Effective
 
     # This is the User index event
     def index
-      @datatable = Effective::Datatables::Trash.new(user_id: current_user.id)
+
+      if Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
+        @datatable = Effective::Datatables::Trash.new(user_id: current_user.id)
+      else
+        @datatable = EffectiveTrashDatatable.new(self, user_id: current_user.id)
+      end
+
       @page_title = 'Trash'
 
       EffectiveTrash.authorized?(self, :index, Effective::Trash.new(user_id: current_user.id))

@@ -9,7 +9,12 @@ module Admin
     helper EffectiveTrashHelper
 
     def index
-      @datatable = Effective::Datatables::Trash.new()
+      if Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
+        @datatable = Effective::Datatables::Trash.new
+      else
+        @datatable = EffectiveTrashDatatable.new(self)
+      end
+
       @page_title = 'Trash'
 
       EffectiveTrash.authorized?(self, :index, Effective::Trash)

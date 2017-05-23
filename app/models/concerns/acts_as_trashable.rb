@@ -14,7 +14,7 @@ module ActsAsTrashable
   end
 
   included do
-    has_one :trash, as: :trashed, class_name: Effective::Trash
+    has_one :trash, as: :trashed, class_name: 'Effective::Trash'
 
     before_destroy do
       EffectiveTrash.trash!(self)

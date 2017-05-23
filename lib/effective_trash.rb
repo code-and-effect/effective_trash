@@ -1,4 +1,3 @@
-require 'haml-rails'
 require 'effective_resources'
 require 'effective_trash/engine'
 require 'effective_trash/version'

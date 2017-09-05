@@ -15,7 +15,7 @@ unless Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
       col :trashed_to_s, label: 'Item'
 
       col :details, visible: false do |trash|
-        tableize_hash(trash.details, th: true, sub_th: false, width: '100%')
+        tableize_hash(trash.details)
       end
 
       unless attributes[:actions] == false

@@ -20,11 +20,5 @@
 
     %br
 
-    - trash.details.each do |key, value|
-      - next unless value.present?
-      .row
-        .col-lg-12
-          %p
-            %strong= "#{key.to_s.titleize}:"
-          = format_trash_details_value(trash, key)
+    = tableize_hash(trash.details)
 

@@ -26,10 +26,8 @@ module Effective
       self[:details] || {}
     end
 
-    # So this is a Trash item
-    # When we delete ourselves, we restore this trash item first
-    def restore!
-      raise 'no attributes to restore from' unless details.kind_of?(Hash) && details[:attributes].present?
+    def to_object
+      raise 'no attributes to consider' unless details.kind_of?(Hash) && details[:attributes].present?
 
       resource = Effective::Resource.new(trashed_type)
       object = trashed_type.constantize.new(details[:attributes])
@@ -37,15 +35,20 @@ module Effective
       resource.nested_resources.each do |association|
         if details[association.name].present? && object.respond_to?("#{association.name}_attributes=")
           nested_attributes = details[association.name].inject({}) do |h, (index, nested)|
-            h[index] = nested[:attributes].except('id', association.inverse_of.foreign_key); h
+            h[index] = nested[:attributes].except('id', association.inverse_of&.foreign_key); h
           end
 
           object.send("#{association.name}_attributes=", nested_attributes)
         end
       end
 
-      object.save!(validate: false)
-      destroy!
+      object
+    end
+
+    # So this is a Trash item
+    # When we delete ourselves, we restore this trash item first
+    def restore!
+      to_object.save!(validate: false)
     end
 
   end

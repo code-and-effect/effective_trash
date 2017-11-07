@@ -1,8 +1,6 @@
 .panel.panel-default
   .panel-body
-    %p
-      %span.label.label-default= trash
-      = trash.trashed_to_s
+    %p= trash.trashed_to_s
 
     - if trash.trashed_extra.present?
       %p= trash.trashed_extra

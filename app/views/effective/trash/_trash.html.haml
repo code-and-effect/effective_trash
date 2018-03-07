@@ -1,7 +1,12 @@
-.panel.panel-default
-  .panel-body
-    %p= trash.trashed_to_s
+.panel.panel-default.card
+  .panel-heading.card-header
+    .row
+      .col-md-10
+        %p= trash.trashed_to_s
+      .col-md-2.text-right
+        = link_to 'Restore', effective_trash.restore_trash_path(trash), class: 'btn btn-primary', data: { confirm: 'Restore this item?'}
 
+  .panel-body.card-body
     - if trash.trashed_extra.present?
       %p= trash.trashed_extra
 

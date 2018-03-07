@@ -3,7 +3,7 @@ module Effective
     self.table_name = EffectiveTrash.trash_table_name.to_s
 
     belongs_to :trashed, polymorphic: true  # The original item type and id. Note that this object will never exist as it's deleted.
-    belongs_to :user, optional: true  # The user that destroyed the original resource
+    belongs_to :user # The user that destroyed the original resource
 
     # Attributes
     # trashed_type       :string
@@ -16,7 +16,8 @@ module Effective
 
     serialize :details, Hash
 
-    default_scope -> { order(updated_at: :desc) }
+    scope :deep, -> { includes(:user, :trashed) }
+    scope :sorted, -> { order(:id) }
 
     def to_s
       trashed_to_s.presence || [trashed_type, trashed_id].join(' ').presence || 'New Trash item'
@@ -49,6 +50,7 @@ module Effective
     # When we delete ourselves, we restore this trash item first
     def restore!
       to_object.save!(validate: false)
+      destroy!
     end
 
   end

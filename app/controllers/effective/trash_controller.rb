@@ -1,23 +1,14 @@
 module Effective
   class TrashController < ApplicationController
-    if respond_to?(:before_action) # Devise
-      before_action :authenticate_user!
-    else
-      before_filter :authenticate_user!
-    end
+    before_action :authenticate_user!
 
     # This is the User index event
     def index
-
-      if Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
-        @datatable = Effective::Datatables::Trash.new(user_id: current_user.id)
-      else
-        @datatable = EffectiveTrashDatatable.new(self, user_id: current_user.id)
-      end
+      @datatable = EffectiveTrashDatatable.new(self, user_id: current_user.id)
 
       @page_title = 'Trash'
 
-      EffectiveTrash.authorized?(self, :index, Effective::Trash.new(user_id: current_user.id))
+      EffectiveTrash.authorize!(self, :index, Effective::Trash.new(user_id: current_user.id))
     end
 
     # This is the User show event
@@ -25,12 +16,12 @@ module Effective
       @trash = Effective::Trash.where(user_id: current_user.id).find(params[:id])
       @page_title = "Trash item - #{@trash.to_s}"
 
-      EffectiveTrash.authorized?(self, :show, @trash)
+      EffectiveTrash.authorize!(self, :show, @trash)
     end
 
     def restore
-      @trash = Effective::Trash.all.find(params[:id])
-      EffectiveTrash.authorized?(self, :update, @trash)
+      @trash = Effective::Trash.find(params[:id])
+      EffectiveTrash.authorize!(self, :update, @trash)
 
       Effective::Trash.transaction do
         begin
@@ -42,7 +33,12 @@ module Effective
         end
       end
 
-      redirect_back(fallback_location: effective_trash.trash_path)
+      if request.referer.to_s.include?(effective_trash.admin_trash_index_path)
+        redirect_to effective_trash.admin_trash_index_path
+      else
+        redirect_to effective_trash.trash_index_path
+      end
+
     end
 
   end

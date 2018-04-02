@@ -1,8 +1,9 @@
 - show_path = (datatable.admin_namespace? ? effective_trash.admin_trash_path(trash) : effective_trash.trash_path(trash))
 
 - if defined?(EffectiveBootstrap)
-  = show_icon_to(show_path)
-  = icon_to('repeat', effective_trash.restore_trash_path(trash), title: 'Restore', data: { confirm: 'Restore this item?'})
+  = dropdown(variation: :dropleft) do
+    = dropdown_link_to 'View', show_path
+    = dropdown_link_to 'Restore from Trash', effective_trash.restore_trash_path(trash), data: { confirm: 'Restore this item?'}
 - else
   = link_to show_path, title: 'view' do
     %span.glyphicon.glyphicon-eye-open

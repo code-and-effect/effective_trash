@@ -24,7 +24,9 @@ module ActsAsTrashable
     acts_as_trashable_options = {
       only: Array(@acts_as_trashable_options[:only]).map { |attribute| attribute.to_s },
       except: Array(@acts_as_trashable_options[:except]).map { |attribute| attribute.to_s },
-      additionally: Array(@acts_as_trashable_options[:additionally]).map { |attribute| attribute.to_s }
+      additionally: Array(@acts_as_trashable_options[:additionally]).map { |attribute| attribute.to_s },
+      include_associated: @acts_as_trashable_options.fetch(:include_associated, true),
+      include_nested: @acts_as_trashable_options.fetch(:include_nested, true)
     }
 
     self.send(:define_method, :acts_as_trashable_options) { acts_as_trashable_options }

@@ -58,6 +58,10 @@ It also serializes the attributes of any `belongs_to`, `has_one`, and `has_many`
 
 Restoring only works with the single base object right now.
 
+`acts_as_trashable include_associated: false` for cheaper trashes that don't to_s every object.
+
+`acts_as_trashable include_nested: false` will ignore any nested_attributes, but careful you can lose data when true.
+
 ## Routes
 
 Visit `/trash`, or `/admin/trash` for an interface to view and restore Trash.

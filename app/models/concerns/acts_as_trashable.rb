@@ -6,7 +6,11 @@ module ActsAsTrashable
       @acts_as_trashable_options = options.try(:first) || {}
 
       unless @acts_as_trashable_options.kind_of?(Hash)
-        raise ArgumentError.new("invalid arguments passed to (effective_trash) acts_as_trashable. Expecting no options.")
+        raise ArgumentError.new("invalid arguments passed to (effective_trash) acts_as_trashable.")
+      end
+
+      if (unknown = (@acts_as_trashable_options.keys - [:only, :except])).present?
+        raise ArgumentError.new("unknown keyword: #{unknown.join(', ')}")
       end
 
       include ::ActsAsTrashable
@@ -22,11 +26,8 @@ module ActsAsTrashable
 
     # Parse Options
     acts_as_trashable_options = {
-      only: Array(@acts_as_trashable_options[:only]).map { |attribute| attribute.to_s },
-      except: Array(@acts_as_trashable_options[:except]).map { |attribute| attribute.to_s },
-      additionally: Array(@acts_as_trashable_options[:additionally]).map { |attribute| attribute.to_s },
-      include_associated: @acts_as_trashable_options.fetch(:include_associated, true),
-      include_nested: @acts_as_trashable_options.fetch(:include_nested, true)
+      only: Array(@acts_as_trashable_options[:only]),
+      except: Array(@acts_as_trashable_options[:except]),
     }
 
     self.send(:define_method, :acts_as_trashable_options) { acts_as_trashable_options }

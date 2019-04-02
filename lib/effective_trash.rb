@@ -44,11 +44,7 @@ module EffectiveTrash
   # Trash it - Does not delete the original object.
   # This is run in a before_destroy, or through a script.
   def self.trash!(obj)
-    args = if obj.respond_to?(:acts_as_trashable_options)
-      obj.acts_as_trashable_options.slice(:include_associated, :include_nested)
-    else
-      { include_associated: true, include_nested: true }
-    end
+    args = (obj.respond_to?(:acts_as_trashable_options) ? obj.acts_as_trashable_options : {})
 
     trash = Effective::Trash.new(
       trashed: obj,

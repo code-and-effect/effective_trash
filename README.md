@@ -46,7 +46,7 @@ and to your contoller:
 
 ```ruby
 class ApplicationController < ActionController::Base
-  before_action :set_effective_trash_current_user
+  around_action :set_effective_trash_current_user
 end
 ```
 
@@ -114,4 +114,3 @@ MIT License.  Copyright [Code and Effect Inc.](http://www.codeandeffect.com/)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Bonus points for test coverage
 6. Create new Pull Request
-

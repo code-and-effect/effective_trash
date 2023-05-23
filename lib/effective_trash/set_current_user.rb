@@ -6,10 +6,14 @@ module EffectiveTrash
       # before_action :set_effective_trash_current_user
 
       def set_effective_trash_current_user
-        EffectiveTrash.current_user = current_user
+        begin
+          EffectiveTrash.current_user = current_user
+          yield
+        ensure
+          EffectiveTrash.current_user = nil
+        end
       end
 
     end
   end
 end
-

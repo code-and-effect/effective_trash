@@ -34,9 +34,9 @@ module ActsAsTrashable
   end
 
   module ClassMethods
+    def acts_as_trashable?; true; end
   end
 
   # Regular instance methods
 
 end
-

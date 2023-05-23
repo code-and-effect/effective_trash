@@ -11,16 +11,16 @@ module Admin
 
       @page_title = 'Trash'
 
-      EffectiveTrash.authorize!(self, :index, Effective::Trash)
-      EffectiveTrash.authorize!(self, :admin, :effective_trash)
+      EffectiveResources.authorize!(self, :index, Effective::Trash)
+      EffectiveResources.authorize!(self, :admin, :effective_trash)
     end
 
     def show
       @trash = Effective::Trash.all.find(params[:id])
       @page_title = "Trash item - #{@trash.trashed_to_s}"
 
-      EffectiveTrash.authorize!(self, :show, @trash)
-      EffectiveTrash.authorize!(self, :admin, :effective_trash)
+      EffectiveResources.authorize!(self, :show, @trash)
+      EffectiveResources.authorize!(self, :admin, :effective_trash)
     end
   end
 end

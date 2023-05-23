@@ -8,7 +8,7 @@ module Effective
 
       @page_title = 'Trash'
 
-      EffectiveTrash.authorize!(self, :index, Effective::Trash.new(user_id: current_user.id))
+      EffectiveResources.authorize!(self, :index, Effective::Trash.new(user_id: current_user.id))
     end
 
     # This is the User show event
@@ -16,12 +16,12 @@ module Effective
       @trash = Effective::Trash.where(user_id: current_user.id).find(params[:id])
       @page_title = "Trash item - #{@trash.to_s}"
 
-      EffectiveTrash.authorize!(self, :show, @trash)
+      EffectiveResources.authorize!(self, :show, @trash)
     end
 
     def restore
       @trash = Effective::Trash.find(params[:id])
-      EffectiveTrash.authorize!(self, :update, @trash)
+      EffectiveResources.authorize!(self, :update, @trash)
 
       Effective::Trash.transaction do
         begin

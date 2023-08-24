@@ -1,3 +1,5 @@
+require_relative '../../app/models/concerns/acts_as_trashable.rb'
+
 module EffectiveTrash
   class Engine < ::Rails::Engine
     engine_name 'effective_trash'

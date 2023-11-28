@@ -14,7 +14,11 @@ module Effective
     # details            :text
     # timestamps
 
-    serialize :details, Hash
+    if EffectiveResources.serialize_with_coder?
+      serialize :details, type: Hash, coder: YAML
+    else
+      serialize :details, Hash
+    end
 
     scope :deep, -> { includes(:user, :trashed) }
     scope :sorted, -> { order(:id) }

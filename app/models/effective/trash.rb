@@ -28,7 +28,7 @@ module Effective
     end
 
     def details
-      self[:details] || {}
+      Hash(self[:details])
     end
 
     def to_object

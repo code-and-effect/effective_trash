@@ -3,7 +3,7 @@ module Effective
     self.table_name = EffectiveTrash.trash_table_name.to_s
 
     belongs_to :trashed, polymorphic: true  # The original item type and id. Note that this object will never exist as it's deleted.
-    belongs_to :user # The user that destroyed the original resource
+    belongs_to :user, optional: true # The user that destroyed the original resource
 
     # Attributes
     # trashed_type       :string
